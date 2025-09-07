@@ -1,11 +1,14 @@
 package utils;
 
+import lombok.Getter;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigReader {
-    private static Properties properties;
+    @Getter
+    private static final Properties properties;
 
     static {
         try {
@@ -18,7 +21,4 @@ public class ConfigReader {
         }
     }
 
-    public static Properties getProperties() {
-        return properties;
-    }
 }

@@ -1,5 +1,6 @@
 package utils;
 
+import constants.FrameworkConstants;
 import lombok.Getter;
 
 import java.io.FileInputStream;
@@ -12,7 +13,7 @@ public class ConfigReader {
 
     static {
         try {
-            FileInputStream fis = new FileInputStream("src/main/resources/config.properties");
+            FileInputStream fis = new FileInputStream(FrameworkConstants.CONFIG_PROPERTIES_PATH);
             properties = new Properties();
             properties.load(fis);
 
@@ -20,5 +21,6 @@ public class ConfigReader {
             throw new RuntimeException("Could not load config.properties file.", e);
         }
     }
+
 
 }

@@ -9,11 +9,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class BrowserFactory {
-    public WebDriver getDriver(String browser, boolean headless) {
+    public static WebDriver getDriver(String browser, boolean headless) {
         WebDriver webDriver;
 
         switch (browser.toLowerCase()) {
-            case "chrome" :
+            case "chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
                 if (headless) {
                     chromeOptions.addArguments("--headless=new");

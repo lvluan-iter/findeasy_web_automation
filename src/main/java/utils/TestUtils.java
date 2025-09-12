@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class TestUtils {
 
-    public static void takeScreenShot(WebDriver driver, String fileName) {
+    public static String takeScreenShot(WebDriver driver, String fileName) {
         TakesScreenshot ts = (TakesScreenshot) driver;
         File srcFile = ts.getScreenshotAs(OutputType.FILE);
         File destFile = new File("screenshots/" + fileName + ".png");
@@ -19,6 +19,7 @@ public class TestUtils {
         try {
             FileHandler.copy(srcFile, destFile);
             System.out.println("📸 Screenshot saved: " + destFile.getAbsolutePath());
+            return destFile.getAbsolutePath();
         } catch (IOException e) {
             throw new RuntimeException("❌ Could not save screenshot", e);
         }

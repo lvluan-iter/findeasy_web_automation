@@ -1,10 +1,10 @@
 package listeners;
 
-import base.BaseTest;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import constants.FrameworkConstants;
+import factory.DriverFactory;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -38,7 +38,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        String screenShotPath = TestUtils.takeScreenShot(BaseTest.getDriver(), result.getName());
+        String screenShotPath = TestUtils.takeScreenShot(DriverFactory.getDriver(), result.getName());
         test.get().fail(result.getThrowable()).addScreenCaptureFromPath(screenShotPath);
     }
 

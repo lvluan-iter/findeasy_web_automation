@@ -1,37 +1,28 @@
 package pages;
 
+import base.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
-    WebDriver webDriver;
+public class LoginPage extends BasePage {
+    private By usernameField = By.xpath("//*[@id=\"login\"]/div[3]/input");
+    private By passwordField = By.xpath("//*[@id=\"login\"]/div[4]/input");
+    private By btnLogin = By.xpath("//*[@id=\"login\"]/button");
 
-    @FindBy(xpath = "//*[@id=\"login\"]/div[3]/input")
-    WebElement usernameField;
-
-    @FindBy(xpath = "//*[@id=\"login\"]/div[4]/input")
-    WebElement passwordField;
-
-    @FindBy(xpath = "//*[@id=\"login\"]/button")
-    WebElement btnLogin;
-
-    public LoginPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        PageFactory.initElements(webDriver,this);
+    public LoginPage(WebDriver driver) {
+        super(driver);
     }
 
     public void enterUsername(String username) {
-        usernameField.sendKeys(username);
+        type(usernameField, username);
     }
 
     public void enterPassword(String password) {
-        passwordField.sendKeys(password);
+        type(passwordField, password);
     }
 
     public void clickLogin() {
-        btnLogin.click();
+        click(btnLogin);
     }
 
     public void login(String username, String password) {

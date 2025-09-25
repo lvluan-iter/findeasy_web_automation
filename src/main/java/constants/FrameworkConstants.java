@@ -7,6 +7,8 @@ public final class FrameworkConstants {
     //====TIMEOUTS====
     public static final int EXPLICIT_WAIT = 10;
     public static final int PAGE_LOAD_TIMEOUT = 20;
+    public static final int WAIT_TIMEOUT = 10;
+    public static final int HOVER_TIME = 1;
 
     //====PATHS====
     public static final String PROJECT_PATH = System.getProperty("user.dir");

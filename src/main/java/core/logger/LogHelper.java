@@ -4,29 +4,30 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class LogHelper {
+
     private static final Logger logger = LogManager.getLogger();
 
-    public static void info(String message) {
+    public static void info(String message, Object... params) {
         logger.info(message);
     }
 
-    public static void warn(String message) {
+    public static void warn(String message, Object... params) {
         logger.warn(message);
     }
 
-    public static void error(String message) {
-        logger.error(message);
+    public static void error(String message, Throwable t, Object... params) {
+        logger.error(message, t);
     }
 
-    public static void error(String message, Throwable throwable) {
-        logger.error(message, throwable);
+    public static void step(String message, Object... params) {
+        logger.info(message);
     }
 
-    public static void debug(String message) {
-        logger.debug(message);
+    public static void pass(String message, Object... params) {
+        logger.info("✅ PASS: {}", message);
     }
 
-    public static void fatal(String message) {
-        logger.fatal(message);
+    public static void fail(String message, Object... params) {
+        logger.error("❌ FAIL: {}", message);
     }
 }

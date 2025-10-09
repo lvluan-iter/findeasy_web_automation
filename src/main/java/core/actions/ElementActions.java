@@ -19,7 +19,7 @@ public class ElementActions {
     public ElementActions(WebDriver driver) {
         this.driver = driver;
     }
-    
+
     public ElementActions setElement(By locator, String description) {
         this.locator = locator;
         this.description = description;
@@ -29,25 +29,32 @@ public class ElementActions {
     }
 
     public ElementActions click() {
-        LogHelper.info("Clicking on: " + description);
+        LogHelper.info("Clicking on: {}", description);
         element.click();
         return this;
     }
 
     public ElementActions doubleClick() {
-        LogHelper.info("Double-clicking on: " + description);
+        LogHelper.info("Double-clicking on: {}", description);
         new Actions(driver).doubleClick(element).perform();
         return this;
     }
 
     public ElementActions hover() {
-        LogHelper.info("Hovering over: " + description);
+        LogHelper.info("Hovering over: {}", description);
         new Actions(driver).moveToElement(element).perform();
         return this;
     }
 
+    public ElementActions type(String text) {
+        LogHelper.info("Typing '{}' into: {}", text, description);
+        element.clear();
+        element.sendKeys(text);
+        return this;
+    }
+
     public ElementActions scrollIntoView() {
-        LogHelper.info("Scrolling into view: " + description);
+        LogHelper.info("Scrolling into view: {}", description);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         return this;
     }
@@ -71,12 +78,12 @@ public class ElementActions {
     }
 
     public String getText() {
-        LogHelper.info("Getting text of: " + description);
+        LogHelper.info("Getting text of: {}", description);
         return element.getText().trim();
     }
 
     public String getAttribute(String attribute) {
-        LogHelper.info("Getting attribute '" + attribute + "' of: " + description);
+        LogHelper.info("Getting attribute '{}' of: {}", attribute, description);
         return element.getAttribute(attribute);
     }
 
@@ -93,25 +100,25 @@ public class ElementActions {
     }
 
     public ElementActions jsClick() {
-        LogHelper.info("Clicking via JS on: " + description);
+        LogHelper.info("Clicking via JS on: {}", description);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
         return this;
     }
 
     public ElementActions keyPress(CharSequence key) {
-        LogHelper.info("Pressing key '" + key + "' on: " + description);
+        LogHelper.info("Pressing key '{}' on: {}", key, description);
         element.sendKeys(key);
         return this;
     }
 
     public int getCount() {
         List<WebElement> elements = driver.findElements(locator);
-        LogHelper.info("Getting count of: " + description + " → " + elements.size());
+        LogHelper.info("Getting count of: {} → {}", description, elements.size());
         return elements.size();
     }
 
     public ElementActions mouseClick() {
-        LogHelper.info("Clicking via mouse action on: " + description);
+        LogHelper.info("Clicking via mouse action on: {}", description);
         new Actions(driver).moveToElement(element).click().perform();
         return this;
     }

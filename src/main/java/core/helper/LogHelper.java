@@ -1,4 +1,4 @@
-package core.logger;
+package core.helper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 public final class LogHelper {
 
     private static final Logger logger = LogManager.getLogger();
+
+    private LogHelper() {
+    }
 
     public static void info(String message, Object... params) {
         logger.info(message);

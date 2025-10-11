@@ -1,13 +1,13 @@
 package core.actions;
 
-import constants.FrameworkConstants;
-import core.logger.LogHelper;
-import org.openqa.selenium.*;
+import core.helper.LogHelper;
+import core.helper.WaitHelper;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 public class ElementActions {
@@ -23,7 +23,7 @@ public class ElementActions {
     public ElementActions setElement(By locator, String description) {
         this.locator = locator;
         this.description = description;
-        waitForVisible();
+        WaitHelper.visible(driver, this.locator, this.description);
         this.element = driver.findElement(locator);
         return this;
     }
@@ -46,34 +46,9 @@ public class ElementActions {
         return this;
     }
 
-    public ElementActions type(String text) {
-        LogHelper.info("Typing '{}' into: {}", text, description);
-        element.clear();
-        element.sendKeys(text);
-        return this;
-    }
-
     public ElementActions scrollIntoView() {
         LogHelper.info("Scrolling into view: {}", description);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        return this;
-    }
-
-    public ElementActions waitForVisible() {
-        new WebDriverWait(driver, Duration.ofSeconds(FrameworkConstants.WAIT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(locator));
-        return this;
-    }
-
-    public ElementActions waitForInvisible() {
-        new WebDriverWait(driver, Duration.ofSeconds(FrameworkConstants.WAIT_TIMEOUT))
-                .until(ExpectedConditions.invisibilityOfElementLocated(locator));
-        return this;
-    }
-
-    public ElementActions waitForClickable() {
-        new WebDriverWait(driver, Duration.ofSeconds(FrameworkConstants.WAIT_TIMEOUT))
-                .until(ExpectedConditions.elementToBeClickable(locator));
         return this;
     }
 
@@ -88,11 +63,7 @@ public class ElementActions {
     }
 
     public boolean isVisible() {
-        try {
-            return element.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        return element.isDisplayed();
     }
 
     public boolean isEnabled() {

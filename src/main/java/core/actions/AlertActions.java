@@ -1,36 +1,28 @@
 package core.actions;
 
-import core.logger.LogHelper;
+import core.helper.LogHelper;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 
 public class AlertActions {
 
     private WebDriver driver;
+    private Alert alert;
     private String description;
 
     public AlertActions(WebDriver driver) {
         this.driver = driver;
     }
 
-    public AlertActions setDescription(String description) {
+    public AlertActions setAlert(String description) {
+        this.alert = driver.switchTo().alert();
         this.description = description;
+        LogHelper.info("Switched to alert: {}", description);
         return this;
-    }
-
-    private Alert getAlert() {
-        try {
-            return driver.switchTo().alert();
-        } catch (NoAlertPresentException e) {
-            LogHelper.error("No alert found while handling: {}", e, description);
-            throw e;
-        }
     }
 
     public String accept() {
         LogHelper.info("Accepting alert: {}", description);
-        Alert alert = getAlert();
         String message = alert.getText().trim();
         alert.accept();
         LogHelper.info("Accepted alert with message: {}", message);
@@ -39,7 +31,6 @@ public class AlertActions {
 
     public String dismiss() {
         LogHelper.info("Dismissing alert: {}", description);
-        Alert alert = getAlert();
         String message = alert.getText().trim();
         alert.dismiss();
         LogHelper.info("Dismissed alert with message: {}", message);
@@ -48,7 +39,6 @@ public class AlertActions {
 
     public String acceptWithText(String inputText) {
         LogHelper.info("Accepting prompt alert '{}' with input: {}", description, inputText);
-        Alert alert = getAlert();
         String message = alert.getText().trim();
         alert.sendKeys(inputText);
         alert.accept();
@@ -57,7 +47,6 @@ public class AlertActions {
     }
 
     public String getText() {
-        Alert alert = getAlert();
         String message = alert.getText().trim();
         LogHelper.info("Reading alert text: {} → {}", description, message);
         return message;

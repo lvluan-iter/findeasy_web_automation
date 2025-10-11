@@ -25,7 +25,7 @@ public class CheckBoxActions {
     }
 
     public CheckBoxActions check() {
-        LogHelper.info("Checking " + description);
+        LogHelper.info("Checking {}", description);
         if (!isChecked()) {
             element.click();
         }
@@ -33,7 +33,7 @@ public class CheckBoxActions {
     }
 
     public CheckBoxActions uncheck() {
-        LogHelper.info("Unchecking " + description);
+        LogHelper.info("Unchecking {}", description);
         if (isChecked()) {
             element.click();
         }

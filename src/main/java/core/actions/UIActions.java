@@ -1,22 +1,20 @@
 package core.actions;
 
 import core.helper.LogHelper;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class UIActions {
 
+    @Getter
     private WebDriver driver;
     private Actions actions;
 
     public UIActions(WebDriver driver) {
         this.driver = driver;
         this.actions = new Actions(driver);
-    }
-
-    public WebDriver getDriver() {
-        return driver;
     }
 
     public void gotoUrl(String url, String description) {

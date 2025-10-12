@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 public class CheckBoxActions {
     private WebDriver driver;
     private WebElement element;
-    private By locator;
     private String description;
 
     public CheckBoxActions(WebDriver driver) {
@@ -17,9 +16,8 @@ public class CheckBoxActions {
     }
 
     public CheckBoxActions setCheckBox(By locator, String description) {
-        this.locator = locator;
         this.description = description;
-        WaitHelper.visible(driver, this.locator, this.description);
+        WaitHelper.visible(driver, locator, this.description);
         this.element = driver.findElement(locator);
         return this;
     }

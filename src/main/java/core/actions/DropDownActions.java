@@ -13,7 +13,6 @@ import java.util.List;
 public class DropDownActions {
     private WebDriver driver;
     private Select select;
-    private By locator;
     private String description;
 
     public DropDownActions(WebDriver driver) {
@@ -21,9 +20,8 @@ public class DropDownActions {
     }
 
     public DropDownActions setDropDown(By locator, String description) {
-        this.locator = locator;
         this.description = description;
-        WaitHelper.visible(driver, this.locator, this.description);
+        WaitHelper.visible(driver, locator, this.description);
         this.select = new Select(driver.findElement(locator));
         return this;
     }

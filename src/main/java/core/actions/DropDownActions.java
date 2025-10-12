@@ -20,7 +20,7 @@ public class DropDownActions {
         this.driver = driver;
     }
 
-    public DropDownActions setLocator(By locator, String description) {
+    public DropDownActions setDropDown(By locator, String description) {
         this.locator = locator;
         this.description = description;
         WaitHelper.visible(driver, this.locator, this.description);

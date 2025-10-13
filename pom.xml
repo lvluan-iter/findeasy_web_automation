@@ -32,7 +32,6 @@
             <artifactId>log4j-api</artifactId>
             <version>2.25.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -40,9 +39,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.aventstack</groupId>
-            <artifactId>extentreports</artifactId>
-            <version>5.1.2</version>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.29.0</version>
         </dependency>
     </dependencies>
 
@@ -57,7 +56,19 @@
                         <suiteXmlFile>SmokeTest.xml</suiteXmlFile>
                         <suiteXmlFile>RegressionTest.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>reports/allure-results</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.13.0</version>
             </plugin>
         </plugins>
     </build>

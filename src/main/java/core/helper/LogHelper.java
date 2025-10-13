@@ -18,8 +18,8 @@ public final class LogHelper {
         logger.warn(message);
     }
 
-    public static void error(String message, Throwable t, Object... params) {
-        logger.error(message, t);
+    public static void error(String message, Object... params) {
+        logger.error(message);
     }
 
     public static void step(String message, Object... params) {
@@ -32,5 +32,9 @@ public final class LogHelper {
 
     public static void fail(String message, Object... params) {
         logger.error("❌ FAIL: {}", message);
+    }
+
+    public static void skip(String message, Object... params) {
+        logger.info("⚠️ SKIPPED: {}", message);
     }
 }

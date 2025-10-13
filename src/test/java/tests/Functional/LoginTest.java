@@ -1,7 +1,7 @@
 package tests.Functional;
 
 import base.BaseTest;
-import factory.DriverFactory;
+import core.factory.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;

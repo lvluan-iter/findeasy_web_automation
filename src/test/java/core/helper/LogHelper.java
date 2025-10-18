@@ -11,30 +11,30 @@ public final class LogHelper {
     }
 
     public static void info(String message, Object... params) {
-        logger.info(message);
+        logger.info(message, params);
     }
 
     public static void warn(String message, Object... params) {
-        logger.warn(message);
+        logger.warn(message, params);
     }
 
     public static void error(String message, Object... params) {
-        logger.error(message);
+        logger.error(message, params);
     }
 
     public static void step(String message, Object... params) {
-        logger.info(message);
+        logger.info("STEP: " + message, params);
     }
 
     public static void pass(String message, Object... params) {
-        logger.info("✅ PASS: {}", message);
+        logger.info("✅ PASS: " + message, params);
     }
 
     public static void fail(String message, Object... params) {
-        logger.error("❌ FAIL: {}", message);
+        logger.error("❌ FAIL: " + message, params);
     }
 
     public static void skip(String message, Object... params) {
-        logger.info("⚠️ SKIPPED: {}", message);
+        logger.warn("⚠️ SKIPPED: " + message, params);
     }
 }

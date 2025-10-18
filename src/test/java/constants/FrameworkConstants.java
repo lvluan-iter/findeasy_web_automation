@@ -12,11 +12,8 @@ public final class FrameworkConstants {
 
     //====PATHS====
     public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String MAIN_RESOURCES_PATH = PROJECT_PATH + "src/main/resources";
-    public static final String TEST_RESOURCES_PATH = PROJECT_PATH + "src/test/resources";
-    public static final String CONFIG_PROPERTIES_PATH = MAIN_RESOURCES_PATH + "/config.properties";
-    public static final String SMOKE_TEST_XML_PATH = TEST_RESOURCES_PATH + "/SmokeTest.xml";
-    public static final String REGRESSION_TEST_XML_PATH = TEST_RESOURCES_PATH + "/RegressionTest.xml";
+    public static final String RESOURCES_PATH = PROJECT_PATH + "/src/main/resources";
+    public static final String CONFIG_PROPERTIES_PATH = RESOURCES_PATH + "/config.properties";
     public static final String REPORT_PATH = PROJECT_PATH + "/reports";
-
+    public static final String FEATURES_PATH = "src/test/resources/features";
 }

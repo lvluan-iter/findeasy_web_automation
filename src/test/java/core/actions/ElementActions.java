@@ -1,5 +1,6 @@
 package core.actions;
 
+import core.enums.WaitType;
 import core.helper.LogHelper;
 import core.helper.WaitHelper;
 import org.openqa.selenium.By;
@@ -20,10 +21,10 @@ public class ElementActions {
         this.driver = driver;
     }
 
-    public ElementActions setElement(By locator, String description) {
+    public ElementActions setElement(By locator, String description, WaitType type) {
         this.locator = locator;
         this.description = description;
-        WaitHelper.visible(driver, this.locator, this.description);
+        WaitHelper.apply(driver, locator, description, type);
         this.element = driver.findElement(locator);
         return this;
     }

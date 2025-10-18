@@ -1,5 +1,6 @@
 package core.actions;
 
+import core.enums.WaitType;
 import core.helper.LogHelper;
 import core.helper.WaitHelper;
 import org.openqa.selenium.By;
@@ -15,9 +16,9 @@ public class CheckBoxActions {
         this.driver = driver;
     }
 
-    public CheckBoxActions setCheckBox(By locator, String description) {
+    public CheckBoxActions setCheckBox(By locator, String description, WaitType type) {
         this.description = description;
-        WaitHelper.visible(driver, locator, this.description);
+        WaitHelper.apply(driver, locator, this.description, type);
         this.element = driver.findElement(locator);
         return this;
     }

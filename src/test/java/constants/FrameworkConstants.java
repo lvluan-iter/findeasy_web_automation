@@ -12,7 +12,7 @@ public final class FrameworkConstants {
 
     //====PATHS====
     public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String RESOURCES_PATH = PROJECT_PATH + "/src/main/resources";
+    public static final String RESOURCES_PATH = PROJECT_PATH + "/src/test/resources";
     public static final String CONFIG_PROPERTIES_PATH = RESOURCES_PATH + "/config.properties";
     public static final String REPORT_PATH = PROJECT_PATH + "/reports";
     public static final String FEATURES_PATH = "src/test/resources/features";

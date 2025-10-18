@@ -11,7 +11,11 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
 
 public class Hooks {
-    protected UIActions ui;
+    private final TestContext context;
+
+    public Hooks(TestContext context) {
+        this.context = context;
+    }
 
     @Before
     public void setUp() {
@@ -20,7 +24,7 @@ public class Hooks {
 
         WebDriver driver = BrowserFactory.getDriver(browser, headless);
         DriverFactory.setDriver(driver);
-        ui = new UIActions(DriverFactory.getDriver());
+        context.setUi(new UIActions(driver));
         DriverFactory.getDriver().get(ConfigReader.getProperty("url"));
     }
 
@@ -28,7 +32,7 @@ public class Hooks {
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
             byte[] screenshot = TestUtils.takeScreenShot(DriverFactory.getDriver(), scenario.getName());
-            scenario.attach(screenshot, "image/pmg", "");
+            scenario.attach(screenshot, "image/png", "Failed Image");
         }
 
         if (DriverFactory.getDriver() != null) {

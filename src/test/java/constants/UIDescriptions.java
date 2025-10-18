@@ -11,4 +11,5 @@ public class UIDescriptions {
     public static final String LOGIN_BUTTON = "login button";
     public static final String TOAST_MESSAGE = "toast message";
     public static final String GO_TO_LOGIN_BTN = "go to login button";
+    public static final String ADMIN_ICON = "admin icon";
 }

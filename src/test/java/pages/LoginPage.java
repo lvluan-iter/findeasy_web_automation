@@ -12,7 +12,7 @@ public class LoginPage {
     private final By btnLogin = By.xpath("//button[@type='submit']");
     private final By toastMessage = By.id("toast");
     private final By goToLoginBtn = By.xpath("//button[.='Đăng nhập']");
-
+    private final By adminIcon = By.id("admin-icon");
 
     public LoginPage(UIActions ui) {
         this.ui = ui;
@@ -36,6 +36,10 @@ public class LoginPage {
 
     public String getToastMessage() {
         return ui.toast(toastMessage, UIDescriptions.TOAST_MESSAGE, WaitType.VISIBLE).getText();
+    }
+
+    public boolean isAdminIconDisplayed() {
+        return ui.element(adminIcon, UIDescriptions.ADMIN_ICON, WaitType.VISIBLE).isVisible();
     }
 
     public void login(String username, String password) {

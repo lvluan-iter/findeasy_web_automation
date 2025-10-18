@@ -16,6 +16,18 @@
         </dependency>
 
         <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.18.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>7.18.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.11.0</version>
@@ -37,12 +49,6 @@
             <artifactId>log4j-core</artifactId>
             <version>2.25.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>2.29.0</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -50,25 +56,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.2.5</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>SmokeTest.xml</suiteXmlFile>
-                        <suiteXmlFile>RegressionTest.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                    <systemProperties>
-                        <property>
-                            <name>allure.results.directory</name>
-                            <value>reports/allure-results</value>
-                        </property>
-                    </systemProperties>
+                    <includes>
+                        <include>**/Run*.java</include>
+                    </includes>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>2.13.0</version>
             </plugin>
         </plugins>
     </build>

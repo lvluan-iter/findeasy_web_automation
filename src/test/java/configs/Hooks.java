@@ -1,17 +1,19 @@
-package base;
+package configs;
 
 import core.actions.UIActions;
 import core.factory.BrowserFactory;
 import core.factory.DriverFactory;
 import core.utils.ConfigReader;
+import core.utils.TestUtils;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
-public class BaseTest {
+public class Hooks {
     protected UIActions ui;
 
-    @BeforeMethod
+    @Before
     public void setUp() {
         String browser = ConfigReader.getProperty("browser");
         boolean headless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
@@ -22,8 +24,13 @@ public class BaseTest {
         DriverFactory.getDriver().get(ConfigReader.getProperty("url"));
     }
 
-    @AfterMethod
-    public void tearDown() {
+    @After
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
+            byte[] screenshot = TestUtils.takeScreenShot(DriverFactory.getDriver(), scenario.getName());
+            scenario.attach(screenshot, "image/pmg", "");
+        }
+
         if (DriverFactory.getDriver() != null) {
             DriverFactory.getDriver().quit();
             DriverFactory.unload();

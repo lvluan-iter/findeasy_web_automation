@@ -1,14 +1,12 @@
 package core.actions;
 
+import core.enums.WaitType;
 import core.helper.LogHelper;
-import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class UIActions {
-
-    @Getter
     private WebDriver driver;
     private Actions actions;
 
@@ -48,23 +46,27 @@ public class UIActions {
         return title;
     }
 
-    public ElementActions element(By locator, String desc) {
-        return new ElementActions(driver).setElement(locator, desc);
+    public ElementActions element(By locator, String desc, WaitType type) {
+        return new ElementActions(driver).setElement(locator, desc, type);
     }
 
-    public InputActions input(By locator, String desc) {
-        return new InputActions(driver).setInput(locator, desc);
+    public InputActions input(By locator, String desc, WaitType type) {
+        return new InputActions(driver).setInput(locator, desc, type);
     }
 
-    public DropDownActions dropdown(By locator, String desc) {
-        return new DropDownActions(driver).setDropDown(locator, desc);
+    public DropDownActions dropdown(By locator, String desc, WaitType type) {
+        return new DropDownActions(driver).setDropDown(locator, desc, type);
     }
 
-    public CheckBoxActions checkbox(By locator, String desc) {
-        return new CheckBoxActions(driver).setCheckBox(locator, desc);
+    public CheckBoxActions checkbox(By locator, String desc, WaitType type) {
+        return new CheckBoxActions(driver).setCheckBox(locator, desc, type);
     }
 
     public AlertActions alert(String desc) {
         return new AlertActions(driver).setAlert(desc);
+    }
+
+    public ToastActions toast(By locator, String desc, WaitType type) {
+        return new ToastActions(driver).setToast(locator, desc, type);
     }
 }

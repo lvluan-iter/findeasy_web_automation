@@ -11,10 +11,8 @@ import pages.LoginPage;
 
 public class LoginSteps {
     private final LoginPage page;
-    private final TestContext context;
 
     public LoginSteps(TestContext context) {
-        this.context = context;
         this.page = new LoginPage(context.getUi());
     }
 

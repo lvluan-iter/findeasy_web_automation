@@ -3,6 +3,7 @@ package configs;
 import core.actions.UIActions;
 import core.factory.BrowserFactory;
 import core.factory.DriverFactory;
+import core.helper.LogHelper;
 import core.utils.ConfigReader;
 import core.utils.TestUtils;
 import io.cucumber.java.After;
@@ -18,7 +19,9 @@ public class Hooks {
     }
 
     @Before
-    public void setUp() {
+    public void setUp(Scenario scenario) {
+        LogHelper.info("===== START SCENARIO: " + scenario.getName() + " =====");
+
         String browser = ConfigReader.getProperty("browser");
         boolean headless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
 
@@ -32,8 +35,10 @@ public class Hooks {
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
             byte[] screenshot = TestUtils.takeScreenShot(DriverFactory.getDriver(), scenario.getName());
-            scenario.attach(screenshot, "image/png", "Failed Image");
+            scenario.attach(screenshot, "image/png", "Failed Screenshot");
         }
+
+        LogHelper.info("===== END SCENARIO: " + scenario.getName() + " - STATUS: " + scenario.getStatus() + " =====");
 
         if (DriverFactory.getDriver() != null) {
             DriverFactory.getDriver().quit();

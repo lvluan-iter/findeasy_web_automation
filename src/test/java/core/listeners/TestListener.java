@@ -11,12 +11,10 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        LogHelper.info("========== STARTING TEST SUITE: {} ==========", context.getName());
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        LogHelper.info("Starting Test: {}", result.getMethod().getMethodName());
     }
 
     @Override
@@ -27,11 +25,9 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        LogHelper.skip(result.getMethod().getMethodName());
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        LogHelper.info("========== FINISHED TEST SUITE: {} ==========", context.getName());
     }
 }

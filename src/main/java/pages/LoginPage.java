@@ -1,21 +1,19 @@
 package pages;
 
+import org.openqa.selenium.By;
 import constants.UIDescriptions;
 import core.actions.UIActions;
 import core.enums.WaitType;
-import org.openqa.selenium.By;
 
-public class LoginPage {
-    private final UIActions ui;
+public class LoginPage extends CommonPage {
     private final By usernameField = By.id("username");
     private final By passwordField = By.id("password");
     private final By btnLogin = By.xpath("//button[@type='submit']");
-    private final By toastMessage = By.id("toast");
     private final By goToLoginBtn = By.xpath("//button[.='Đăng nhập']");
     private final By adminIcon = By.id("admin-icon");
 
     public LoginPage(UIActions ui) {
-        this.ui = ui;
+        super(ui);
     }
 
     public void goToLoginPage() {
@@ -32,10 +30,6 @@ public class LoginPage {
 
     public void clickLogin() {
         ui.element(btnLogin, UIDescriptions.LOGIN_BUTTON, WaitType.VISIBLE).click();
-    }
-
-    public String getToastMessage() {
-        return ui.toast(toastMessage, UIDescriptions.TOAST_MESSAGE, WaitType.VISIBLE).getText();
     }
 
     public boolean isAdminIconDisplayed() {

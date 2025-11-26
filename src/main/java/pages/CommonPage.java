@@ -16,4 +16,8 @@ public class CommonPage {
     public String getToastMessage() {
         return ui.toast(toastMessage, UIDescriptions.TOAST_MESSAGE, WaitType.VISIBLE).getText();
     }
+
+    public String getAlertMessage() {
+        return ui.alert(UIDescriptions.ALERT_MESSAGE).getText();
+    }
 }

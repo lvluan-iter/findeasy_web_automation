@@ -24,7 +24,7 @@ import pages.RegisterPage;
 public class RegisterTest {
 
     private User guestData;
-    private RegisterPage register;
+    private RegisterPage page;
 
     @BeforeClass
     public void loadData() {
@@ -34,25 +34,25 @@ public class RegisterTest {
 
     @BeforeMethod
     public void initPage() {
-        register = new RegisterPage(new UIActions(DriverFactory.getDriver()));
-        register.goToRegister();
+        page = new RegisterPage(new UIActions(DriverFactory.getDriver()));
+        page.goToRegister();
     }
 
     @Test(description = "Verify guest can register successfully with full form 's field",
             groups = {"smoke"})
     @Severity(SeverityLevel.BLOCKER)
     public void userRegisterSuccess() {
-        register.enterUsername(guestData.getUsername());
-        register.enterPassword(guestData.getPassword());
-        register.enterRewritePassword(guestData.getPassword());
-        register.enterEmail(guestData.getEmail());
-        register.enterFullName(guestData.getFullname());
-        register.selectGender(guestData.getGender());
-        register.enterBirthdate(guestData.getBirthdate());
-        register.enterPhone(guestData.getPhoneNumber());
-        register.clickRegister();
+        page.enterUsername(guestData.getUsername());
+        page.enterPassword(guestData.getPassword());
+        page.enterRewritePassword(guestData.getPassword());
+        page.enterEmail(guestData.getEmail());
+        page.enterFullName(guestData.getFullname());
+        page.selectGender(guestData.getGender());
+        page.enterBirthdate(guestData.getBirthdate());
+        page.enterPhone(guestData.getPhoneNumber());
+        page.clickRegister();
 
-        Asserts.assertEquals(register.getToastMessage(), MessageConstants.REGISTER_SUCCESS,
+        Asserts.assertEquals(page.getToastMessage(), MessageConstants.REGISTER_SUCCESS,
                 UIDescriptions.TOAST_MESSAGE);
     }
 }

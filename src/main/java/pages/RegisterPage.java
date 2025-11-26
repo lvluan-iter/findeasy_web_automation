@@ -5,9 +5,7 @@ import constants.UIDescriptions;
 import core.actions.UIActions;
 import core.enums.WaitType;
 
-public class RegisterPage {
-    private UIActions ui;
-
+public class RegisterPage extends CommonPage {
     By goToRegister = By.xpath("//a[contains(., 'Đăng ký')]");
     By username = By.id("username");
     By password = By.id("password");
@@ -20,7 +18,7 @@ public class RegisterPage {
     By registerBtn = By.xpath("//button[@type='submit']");
 
     public RegisterPage(UIActions ui) {
-        this.ui = ui;
+        super(ui);
     }
 
     public void goToRegister() {
@@ -65,14 +63,12 @@ public class RegisterPage {
     }
 
     public void register(String username, String password, String rpassword, String email,
-            String name, String gender, String birthday, String phone) {
+            String name, String phone) {
         enterUsername(username);
         enterPassword(password);
         enterRewritePassword(rpassword);
         enterEmail(email);
         enterFullName(name);
-        selectGender(gender);
-        enterBirthdate(birthday);
         enterPhone(phone);
         clickRegister();
     }

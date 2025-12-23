@@ -3,41 +3,44 @@ package pages;
 import org.openqa.selenium.By;
 import constants.UIDescriptions;
 import core.actions.UIActions;
-import core.enums.WaitType;
 
 public class LoginPage extends CommonPage {
     private final By usernameField = By.id("username");
     private final By passwordField = By.id("password");
     private final By btnLogin = By.xpath("//button[@type='submit']");
-    private final By goToLoginBtn = By.xpath("//button[.='Đăng nhập']");
-    private final By adminIcon = By.id("admin-icon");
+    private final By goToRegister = By.xpath("//a[contains(., 'Đăng ký')]");
+    private final By goToForgot = By.xpath("//a[contains(., 'Quên mật khẩu')]");
 
     public LoginPage(UIActions ui) {
         super(ui);
     }
 
-    public void goToLoginPage() {
-        ui.element(goToLoginBtn, UIDescriptions.GO_TO_LOGIN_BTN, WaitType.PRESENT).jsClick();
+    public RegisterPage goToRegister() {
+        ui.element(goToRegister, UIDescriptions.GO_TO_REGISTER).waitTillVisible().click();
+        return new RegisterPage(ui);
     }
 
-    public void enterUsername(String username) {
-        ui.input(usernameField, UIDescriptions.USERNAME_FIELD, WaitType.VISIBLE).fill(username);
+    public ForgotPasswordPage goToForgotPassword() {
+        ui.element(goToForgot, UIDescriptions.GO_TO_FORGOT_PASSWORD).waitTillVisible().click();
+        return new ForgotPasswordPage(ui);
     }
 
-    public void enterPassword(String password) {
-        ui.input(passwordField, UIDescriptions.PASSWORD_FIELD, WaitType.VISIBLE).fill(password);
+    public LoginPage enterUsername(String username) {
+        ui.element(usernameField, UIDescriptions.USERNAME_FIELD).waitTillVisible().fill(username);
+        return this;
     }
 
-    public void clickLogin() {
-        ui.element(btnLogin, UIDescriptions.LOGIN_BUTTON, WaitType.VISIBLE).click();
+    public LoginPage enterPassword(String password) {
+        ui.element(passwordField, UIDescriptions.PASSWORD_FIELD).waitTillVisible().fill(password);
+        return this;
     }
 
-    public boolean isAdminIconDisplayed() {
-        return ui.element(adminIcon, UIDescriptions.ADMIN_ICON, WaitType.VISIBLE).isVisible();
+    public HomePage clickLogin() {
+        ui.element(btnLogin, UIDescriptions.LOGIN_BUTTON).waitTillVisible().click();
+        return new HomePage(ui);
     }
 
     public void login(String username, String password) {
-        goToLoginPage();
         enterUsername(username);
         enterPassword(password);
         clickLogin();

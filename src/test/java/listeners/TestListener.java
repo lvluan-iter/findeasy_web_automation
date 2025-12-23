@@ -9,9 +9,9 @@ import org.testng.ITestResult;
 import core.factory.BrowserFactory;
 import core.factory.DriverFactory;
 import core.helper.LogHelper;
-import core.utils.ConfigReader;
 import core.utils.TestUtils;
 import io.qameta.allure.Allure;
+import utils.ConfigReader;
 
 public class TestListener implements ITestListener, ISuiteListener {
 
@@ -30,13 +30,13 @@ public class TestListener implements ITestListener, ISuiteListener {
         String testName = result.getMethod().getMethodName();
         LogHelper.info("===== START TEST: " + testName + " =====");
 
-        String browser = ConfigReader.getProperty("browser");
-        boolean headless = Boolean.parseBoolean(ConfigReader.getProperty("headless"));
+        String browser = ConfigReader.init().getProperty("browser");
+        boolean headless = Boolean.parseBoolean(ConfigReader.init().getProperty("headless"));
 
         WebDriver driver = BrowserFactory.getDriver(browser, headless);
         DriverFactory.setDriver(driver);
 
-        driver.get(ConfigReader.getProperty("url"));
+        driver.get(ConfigReader.init().getProperty("url"));
     }
 
     @Override

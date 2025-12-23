@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.By;
 import constants.UIDescriptions;
 import core.actions.UIActions;
-import core.enums.WaitType;
 
 public class CommonPage {
     protected final UIActions ui;
@@ -14,7 +13,7 @@ public class CommonPage {
     }
 
     public String getToastMessage() {
-        return ui.toast(toastMessage, UIDescriptions.TOAST_MESSAGE, WaitType.VISIBLE).getText();
+        return ui.element(toastMessage, UIDescriptions.TOAST_MESSAGE).waitTillVisible().getText();
     }
 
     public String getAlertMessage() {

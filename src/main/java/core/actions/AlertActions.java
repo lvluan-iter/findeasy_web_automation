@@ -1,8 +1,12 @@
 package core.actions;
 
-import core.helper.LogHelper;
+import java.time.Duration;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import constants.FrameworkConstants;
+import core.helper.LogHelper;
 
 public class AlertActions {
 
@@ -10,14 +14,19 @@ public class AlertActions {
     private Alert alert;
     private String description;
 
-    public AlertActions(WebDriver driver) {
+    public AlertActions(WebDriver driver, String description) {
         this.driver = driver;
+        this.description = description;
     }
 
-    public AlertActions setAlert(String description) {
-        this.alert = driver.switchTo().alert();
-        this.description = description;
-        LogHelper.info("Switched to alert: {}", description);
+    public static AlertActions setAlert(WebDriver driver, String description) {
+        return new AlertActions(driver, description);
+    }
+
+    public AlertActions waitAlertIsPresent() {
+        LogHelper.info("Waiting till alert is present: {}", description);
+        alert = new WebDriverWait(driver, Duration.ofSeconds(FrameworkConstants.WAIT_TIMEOUT))
+                .until(ExpectedConditions.alertIsPresent());
         return this;
     }
 

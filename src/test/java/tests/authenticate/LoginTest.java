@@ -8,69 +8,79 @@ import constants.MessageConstants;
 import constants.UIDescriptions;
 import core.actions.UIActions;
 import core.assertions.Asserts;
-import core.enums.UserRole;
 import core.factory.DriverFactory;
-import core.utils.JsonReader;
-import core.utils.Randomizer;
+import enums.UserRole;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import models.User;
+import pages.HomePage;
 import pages.LoginPage;
+import utils.DataGenerateUtils;
+import utils.JsonUtils;
+import utils.Randomizer;
 
 @Epic("Authentication")
 @Feature("Login")
 public class LoginTest {
-    private LoginPage page;
-    private User normalUser;
-    private User adminUser;
+
+    private LoginPage loginPage;
+    private User user;
+    private User admin;
 
     @BeforeClass
     public void setup() {
-        normalUser = JsonReader.readJsonByKey(FrameworkConstants.ACCOUNT_JSON_PATH, User.class,
-                UserRole.USER.getRoleName());
+        user = JsonUtils.fromFileByKey(FrameworkConstants.ACCOUNT_JSON_PATH,
+                UserRole.USER.getRoleName(), User.class);
 
-        adminUser = JsonReader.readJsonByKey(FrameworkConstants.ACCOUNT_JSON_PATH, User.class,
-                UserRole.ADMIN.getRoleName());
+        admin = JsonUtils.fromFileByKey(FrameworkConstants.ACCOUNT_JSON_PATH,
+                UserRole.ADMIN.getRoleName(), User.class);
     }
 
     @BeforeMethod
     public void initPage() {
-        page = new LoginPage(new UIActions(DriverFactory.getDriver()));
-        page.goToLoginPage();
+        UIActions action = new UIActions(DriverFactory.getDriver());
+        HomePage home = new HomePage(action);
+
+        loginPage = home.goToLoginPage();
     }
 
-    @Test(description = "Verify normal user can login successfully", groups = {"smoke"})
+    @Test(testName = "Verify normal user can login successfully", groups = {"smoke"})
     @Severity(SeverityLevel.BLOCKER)
     public void userLoginSuccess() {
-        page.login(normalUser.getUsername(), normalUser.getPassword());
-        Asserts.assertEquals(page.getToastMessage(), MessageConstants.LOGIN_SUCCESS,
+        loginPage.enterUsername(user.getUsername()).enterPassword(user.getPassword()).clickLogin();
+        Asserts.assertEquals(loginPage.getToastMessage(), MessageConstants.LOGIN_SUCCESS,
                 UIDescriptions.TOAST_MESSAGE);
     }
 
-    @Test(description = "Verify admin can login successfully", groups = {"smoke"})
+    @Test(testName = "Verify admin can login successfully", groups = {"smoke"})
     @Severity(SeverityLevel.BLOCKER)
     public void adminLoginSuccess() {
-        page.login(adminUser.getUsername(), adminUser.getPassword());
-        Asserts.assertEquals(page.getToastMessage(), MessageConstants.LOGIN_SUCCESS,
+        HomePage homePage = loginPage.enterUsername(admin.getUsername())
+                .enterPassword(admin.getPassword()).clickLogin();
+
+        Asserts.assertEquals(homePage.getToastMessage(), MessageConstants.LOGIN_SUCCESS,
                 UIDescriptions.TOAST_MESSAGE);
-        Asserts.assertTrue(page.isAdminIconDisplayed(), UIDescriptions.ADMIN_ICON);
+
+        Asserts.assertTrue(homePage.isAdminIconDisplayed(), UIDescriptions.ADMIN_ICON);
     }
 
-    @Test(description = "Verify user cannot login with invalid username", groups = {"functional"})
+    @Test(testName = "Verify user cannot login with invalid username", groups = {"functional"})
     @Severity(SeverityLevel.CRITICAL)
     public void loginFailWithInvalidUsername() {
-        page.login(Randomizer.randomAlphaNumeric(5), normalUser.getPassword());
-        Asserts.assertEquals(page.getToastMessage(), MessageConstants.LOGIN_INVALID_CREDENTIALS,
-                UIDescriptions.TOAST_MESSAGE);
+        loginPage.enterUsername(Randomizer.randomAlphabets(5)).enterPassword(user.getPassword())
+                .clickLogin();
+        Asserts.assertEquals(loginPage.getToastMessage(),
+                MessageConstants.LOGIN_INVALID_CREDENTIALS, UIDescriptions.TOAST_MESSAGE);
     }
 
-    @Test(description = "Verify user cannot login with invalid password", groups = {"functional"})
+    @Test(testName = "Verify user cannot login with invalid password", groups = {"functional"})
     @Severity(SeverityLevel.CRITICAL)
     public void loginFailWithInvalidPassword() {
-        page.login(normalUser.getUsername(), Randomizer.randomAlphaNumeric(8));
-        Asserts.assertEquals(page.getToastMessage(), MessageConstants.LOGIN_INVALID_CREDENTIALS,
-                UIDescriptions.TOAST_MESSAGE);
+        loginPage.enterUsername(user.getUsername()).enterPassword(DataGenerateUtils.password())
+                .clickLogin();
+        Asserts.assertEquals(loginPage.getToastMessage(),
+                MessageConstants.LOGIN_INVALID_CREDENTIALS, UIDescriptions.TOAST_MESSAGE);
     }
 }

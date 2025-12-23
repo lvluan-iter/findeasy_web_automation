@@ -9,7 +9,8 @@ public class MessageConstants {
             "Tên đăng nhập đã tồn tại trong hệ thống.";
     public static final String REGISTER_PASSWORD_NOT_MATCH = "Mật khẩu nhập lại không khớp.";
     public static final String FORGOT_PASSWORD_SUCCESS =
-            "Vui lòng kiểm tra email để đặt lại mật khẩu.";
+            "Reset link sent! Please check your email.";
     public static final String EMAIL_NOT_EXIST_MESSAGE = "Email không tồn tại trong hệ thống.";
+    public static final String ERROR_OCCURED = "An unexpected error occurred. Please try again.";
 
 }

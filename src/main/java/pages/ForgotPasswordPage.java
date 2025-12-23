@@ -3,27 +3,23 @@ package pages;
 import org.openqa.selenium.By;
 import constants.UIDescriptions;
 import core.actions.UIActions;
-import core.enums.WaitType;
 
 public class ForgotPasswordPage extends CommonPage {
     private final By email = By.id("email");
     private final By submitBtn = By.xpath("//button[@type='submit']");
-    private final By goToForgot = By.xpath("//a[contains(., 'Quên mật khẩu')]");
 
     public ForgotPasswordPage(UIActions ui) {
         super(ui);
     }
 
-    public void goToForgotPassword() {
-        ui.element(goToForgot, UIDescriptions.GO_TO_FORGOT_PASSWORD, WaitType.VISIBLE).click();
+    public ForgotPasswordPage enterEmail(String mail) {
+        ui.element(email, UIDescriptions.EMAIL).waitTillVisible().fill(mail);
+        return this;
     }
 
-    public void enterEmail(String mail) {
-        ui.input(email, UIDescriptions.EMAIL, WaitType.VISIBLE).fill(mail);
-    }
-
-    public void clickSubmit() {
-        ui.element(submitBtn, UIDescriptions.SUBMIT_BTN, WaitType.CLICKABLE).click();
+    public ForgotPasswordPage clickSubmit() {
+        ui.element(submitBtn, UIDescriptions.SUBMIT_BTN).waitTillVisible().click();
+        return this;
     }
 
     public void sendForgotPassword(String email) {

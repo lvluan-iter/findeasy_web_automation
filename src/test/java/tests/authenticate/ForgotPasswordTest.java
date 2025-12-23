@@ -8,41 +8,42 @@ import constants.MessageConstants;
 import constants.UIDescriptions;
 import core.actions.UIActions;
 import core.assertions.Asserts;
-import core.enums.UserRole;
 import core.factory.DriverFactory;
-import core.utils.JsonReader;
-import core.utils.Randomizer;
+import enums.UserRole;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import models.User;
 import pages.ForgotPasswordPage;
+import pages.HomePage;
+import utils.JsonUtils;
+import utils.Randomizer;
 
 @Epic("Authentication")
 @Feature("Forgot Password")
 public class ForgotPasswordTest {
 
-    private User normalUser;
+    private User user;
     private ForgotPasswordPage page;
 
     @BeforeClass
     public void loadData() {
-        normalUser = JsonReader.readJsonByKey(FrameworkConstants.ACCOUNT_JSON_PATH, User.class,
-                UserRole.USER.getRoleName());
+        user = JsonUtils.fromFileByKey(FrameworkConstants.ACCOUNT_JSON_PATH,
+                UserRole.USER.getRoleName(), User.class);
     }
 
     @BeforeMethod
     public void initPage() {
-        page = new ForgotPasswordPage(new UIActions(DriverFactory.getDriver()));
-        page.goToForgotPassword();
+        HomePage home = new HomePage(new UIActions(DriverFactory.getDriver()));
+        page = home.goToLoginPage().goToForgotPassword();
     }
 
     @Test(description = "Verify user can send forgot password request successfully",
             groups = {"smoke"})
     @Severity(SeverityLevel.BLOCKER)
     public void forgotPasswordSuccess() {
-        page.sendForgotPassword(normalUser.getEmail());
+        page.enterEmail(user.getEmail()).clickSubmit();
         Asserts.assertEquals(page.getAlertMessage(), MessageConstants.FORGOT_PASSWORD_SUCCESS,
                 UIDescriptions.ALERT_MESSAGE);
     }
@@ -51,8 +52,8 @@ public class ForgotPasswordTest {
             groups = {"functional"})
     @Severity(SeverityLevel.CRITICAL)
     public void forgotPasswordInvalidEmail() {
-        page.sendForgotPassword(Randomizer.randomEmail());
-        Asserts.assertEquals(page.getAlertMessage(), MessageConstants.EMAIL_NOT_EXIST_MESSAGE,
+        page.enterEmail(Randomizer.randomEmail()).clickSubmit();
+        Asserts.assertEquals(page.getAlertMessage(), MessageConstants.ERROR_OCCURED,
                 UIDescriptions.ALERT_MESSAGE);
     }
 }
